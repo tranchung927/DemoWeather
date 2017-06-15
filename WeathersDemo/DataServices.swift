@@ -36,8 +36,9 @@ class DataServices {
         }
         
         let urlRequest = URLRequest(url: url)
-        makeDataTaskRequest(request: urlRequest) { self.weather = Weather(json: $0)}
-
+        makeDataTaskRequest(request: urlRequest) { self.weather = Weather(json: $0)
+        NotificationCenter.default.post(name: NotificationKey.data, object: nil)
+        }
     }
 
     
@@ -57,7 +58,6 @@ class DataServices {
             DispatchQueue.main.async {
                 completedBlock(json)
             }
-            
         }
         task.resume()
     }

@@ -38,6 +38,6 @@ struct Weather {
         self.city = name
         self.condition = text
         self.degree = temp
-        self.imgURL = icon
+        self.imgURL = "http:\(icon)"
     }
 }
