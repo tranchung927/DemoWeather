@@ -16,10 +16,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var degreLb: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
+    var weather: Weather? {
+        willSet {
+            self.weather = DataServices.shared.weather
+        }
+        didSet{
+            nameLb.text = self.weather?.city
+            guard let degree = self.weather?.degree else {
+                return
+            }
+            degreLb.text = "\(degree)"
+            conditonLb.text = weather?.condition
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    override func viewWillAppear(_ animated: Bool) {
     }
 }
 
@@ -29,7 +41,10 @@ extension ViewController: UISearchBarDelegate {
 //
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         DataServices.shared.searchKey = searchBar.text ?? ""
-        
+        guard let weather = DataServices.shared.weather else {
+            return
+        }
+        self.weather = weather
     }
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         DataServices.shared.searchKey = searchBar.text ?? ""

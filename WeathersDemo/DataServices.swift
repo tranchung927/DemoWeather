@@ -17,7 +17,7 @@ class DataServices {
         }
     }
     
-    private var weather : Weather?
+    var weather : Weather?
     
     
     private func  weatherAtLocation(locationString: String) {

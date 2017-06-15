@@ -84,8 +84,8 @@
 		F275530F1EEE952E0093F7AC /* WeathersDemo */ = {
 			isa = PBXGroup;
 			children = (
-				F244B7021EF0EA240092683E /* Controller */,
 				F27553101EEE952E0093F7AC /* AppDelegate.swift */,
+				F244B7021EF0EA240092683E /* Controller */,
 				F244B7001EF0E7330092683E /* Model */,
 				F244B7011EF0E9F00092683E /* Services */,
 				F27553141EEE952E0093F7AC /* Main.storyboard */,
