@@ -4,7 +4,7 @@
 //
 //  Created by Tran Chung on 6/14/17.
 //  Copyright © 2017 Tran Chung. All rights reserved.
-//
+//  http://api.apixu.com/v1/forecast.json?key=19c25d79bf234b12af0101146171206&q=Paris
 
 import UIKit
 
@@ -19,9 +19,8 @@ class DataServices {
     
     var weather : Weather?
     
-    
     private func  weatherAtLocation(locationString: String) {
-        let baseUrl = "http://api.apixu.com/v1/current.json?"
+        let baseUrl = "http://api.apixu.com/v1/forecast.json?"
         var urlString = baseUrl
         var parameter : Dictionary<String, String> = [:]
         parameter["q"] = searchKey

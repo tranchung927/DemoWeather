@@ -15,6 +15,7 @@ struct Weather {
         var condition: String
         var imgURL: String
         var city: String
+        var weatherObjectarray: [WeatherOBject] = []
     
     init?(json: JSON) {
         guard let location = json["location"] as? JSON,
@@ -34,10 +35,36 @@ struct Weather {
                 return nil
         }
         
+        guard let forecast = json["forecast"] as? JSON,
+            let forecastday = forecast["forecastday"] as? [JSON]
+            else {
+            return nil
+        }
+        for item_L in forecastday {
+            let hour = item_L["hour"] as! [JSON]
+            for item in hour {
+                let time_Hour = item["time"] as? String
+                let tempC_Hour = item["temp_c"] as? Double
+                let condition_Hour = item["condition"] as? JSON
+                let text_Hour = condition_Hour?["text"] as? String
+                let icon_Hour = condition_Hour?["icon"] as? String
+                let weatherObject = WeatherOBject(timeHour: time_Hour!, tempCHour: tempC_Hour!, textHour: text_Hour!, iconHour: "http:\(icon_Hour!)")
+                weatherObjectarray.append(weatherObject)
+            }
+        }
+        
+        
         // Initialize properties
         self.city = name
         self.condition = text
         self.degree = temp
         self.imgURL = "http:\(icon)"
     }
+}
+
+struct WeatherOBject {
+    var timeHour: String
+    var tempCHour: Double
+    var textHour: String
+    var iconHour: String
 }

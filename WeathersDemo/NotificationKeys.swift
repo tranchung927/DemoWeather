@@ -10,4 +10,5 @@ import Foundation
 
 struct NotificationKey {
     static let data = Notification.Name.init("data")
+    static let hide = Notification.Name.init("hide")
 }

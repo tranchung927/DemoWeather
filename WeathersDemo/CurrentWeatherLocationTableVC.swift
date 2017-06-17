@@ -1,14 +1,14 @@
 //
-//  CurrentWeatherLocationVC.swift
+//  CurrentWeatherLocationTableVC.swift
 //  WeathersDemo
 //
-//  Created by Tran Chung on 6/15/17.
+//  Created by Tran Chung on 6/16/17.
 //  Copyright © 2017 Tran Chung. All rights reserved.
 //
 
 import UIKit
 
-class CurrentWeatherLocationVC: UIViewController {
+class CurrentWeatherLocationTableVC: UITableViewController {
 
     
     @IBOutlet weak var nameLb: UILabel!
@@ -45,4 +45,5 @@ class CurrentWeatherLocationVC: UIViewController {
     func updateData() {
         self.weather = DataServices.shared.weather
     }
+    
 }
