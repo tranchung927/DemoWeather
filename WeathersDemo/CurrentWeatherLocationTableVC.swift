@@ -16,6 +16,8 @@ class CurrentWeatherLocationTableVC: UITableViewController {
     @IBOutlet weak var degreLb: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
+    var time: Date?
+    
     var weather: Weather? {
         willSet {
             self.weather = DataServices.shared.weather
@@ -25,7 +27,7 @@ class CurrentWeatherLocationTableVC: UITableViewController {
             guard let degree = self.weather?.degree else {
                 return
             }
-            degreLb.text = "\(degree)"
+            degreLb.text = "\(degree)ºC"
             conditonLb.text = weather?.condition
             guard let urlImage = weather?.imgURL else {
                 return
