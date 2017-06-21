@@ -5,6 +5,7 @@
 //  Created by Tran Chung on 6/14/17.
 //  Copyright © 2017 Tran Chung. All rights reserved.
 //  http://api.apixu.com/v1/forecast.json?key=19c25d79bf234b12af0101146171206&q=Paris
+//  http://api.apixu.com/v1/forecast.json?key=f3d902b438a3451c92605731171906&q=Hanoi&days=10
 
 import UIKit
 
@@ -27,7 +28,7 @@ class DataServices {
         parameter["key"] = "f3d902b438a3451c92605731171906"
         
         for (key,value) in parameter {
-            urlString += "&" + key + "=" + value
+            urlString += "&" + key + "=" + value + "&days=10"
         }
         
         guard let url = URL(string: urlString)   else {
