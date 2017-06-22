@@ -1,4 +1,4 @@
-//
+ //
 //  Weather.swift
 //  WeathersDemo
 //
@@ -10,14 +10,14 @@ import Foundation
 
 typealias JSON = Dictionary<AnyHashable,Any>
 
-struct Weather {
-        var degree: Double
-        var condition: String
-        var imgURL: String
-        var city: String
-        var timeCurrent: TimeInterval
-        var weatherObjectarray: [WeatherOBject] = []
-        var weatherDateObjectArray: [WeatherDateObject] = []
+struct CityWeather {
+    var degree: Double
+    var condition: String
+    var imgURL: String
+    var city: String
+    var timeCurrent: TimeInterval
+    var weatherOfDays: [WeatherOfDay] = []
+    
     
     init?(json: JSON) {
         guard let location = json["location"] as? JSON,
@@ -39,37 +39,16 @@ struct Weather {
         }
         
         guard let forecast = json["forecast"] as? JSON,
-            let forecastday = forecast["forecastday"] as? [JSON]
-            else {
-            return nil
-        }
-        
-        for item_D in forecastday {
-            let date_epoch = item_D["date_epoch"] as? TimeInterval
-            guard let day = item_D["day"] as? JSON,
-                let maxtemp_c = day["maxtemp_c"] as? Double,
-                let mintemp_c = day["mintemp_c"] as? Double,
-                let conditionDay = day["condition"] as? JSON
+            let forecastdays = forecast["forecastday"] as? [JSON]
             else {
                 return nil
-            }
-            guard let iconDay = conditionDay["icon"] as? String
-                else {
-                    return nil
-            }
-            let hour = item_D["hour"] as? [JSON]
-            for item in hour! {
-                let time_Hour = item["time_epoch"] as? TimeInterval
-                let tempC_Hour = item["temp_c"] as? Double
-                let condition_Hour = item["condition"] as? JSON
-                let icon_Hour = condition_Hour?["icon"] as? String
-                let weatherObject = WeatherOBject(timeHour: time_Hour!, tempCHour: tempC_Hour!, iconHour: "http:\(icon_Hour!)")
-                weatherObjectarray.append(weatherObject)
-            }
-            let weatherDateObject = WeatherDateObject(date: date_epoch!, iconDate: iconDay, maxtemp: maxtemp_c, mintemp: mintemp_c)
-            weatherDateObjectArray.append(weatherDateObject)
         }
-
+        for dayWeatherDict in forecastdays {
+            if let weatherOfDay = WeatherOfDay(json: dayWeatherDict) {
+                weatherOfDays.append(weatherOfDay)
+            }
+        }
+        
         // Initialize properties
         self.city = name
         self.condition = text
@@ -79,14 +58,53 @@ struct Weather {
     }
 }
 
-struct WeatherOBject {
-    var timeHour: TimeInterval
-    var tempCHour: Double
-    var iconHour: String
+class WeatherOfHour {
+    var time_Hour: TimeInterval
+    var tempC_Hour: Double
+    var icon_Hour: String
+    
+    init?(json: JSON) {
+        //            for item in hour! {
+        //                let time_Hour = item["time_epoch"] as? TimeInterval
+        //                let tempC_Hour = item["temp_c"] as? Double
+        //                let condition_Hour = item["condition"] as? JSON
+        //                let icon_Hour = condition_Hour?["icon"] as? String
+        //                let weatherObject = WeatherOfHour(timeHour: time_Hour!, tempCHour: tempC_Hour!, iconHour: "http:\(icon_Hour!)")
+        //                weatherObjectarray.append(weatherObject)
+        //
+        //                print(weatherObjectarray.count)
+        //            }
+        //            let weatherDateObject = WeatherOfDay(date: date_epoch!, iconDate: iconDay, maxtemp: maxtemp_c, mintemp: mintemp_c)
+        //            weatherDateObjectArray.append(weatherDateObject)
+
+    }
 }
-struct WeatherDateObject {
+class WeatherOfDay {
     var date: TimeInterval
-    var iconDate: String
-    var maxtemp: Double
-    var mintemp: Double
+    var icon_Date: String
+    var maxtemp_Date: Double
+    var mintemp_Date: Double
+    var weatherOfHours: [WeatherOfHour]?
+    
+    init?(json: JSON) {
+        
+        for hourWeatherJSON in hourWeatherJSONs{
+            if let weatherOfHour = WeatherOfHour(json: hourWeatherJSON) {
+                weatherOfHours?.append(weatherOfHour)
+            }
+        }
+//        let date_epoch = item_D["date_epoch"] as? TimeInterval
+//        guard let day = item_D["day"] as? JSON,
+//            let maxtemp_c = day["maxtemp_c"] as? Double,
+//            let mintemp_c = day["mintemp_c"] as? Double,
+//            let conditionDay = day["condition"] as? JSON
+//            else {
+//                return nil
+//        }
+//        guard let iconDay = conditionDay["icon"] as? String
+//            else {
+//                return nil
+//        }
+//        let hour = item_D["hour"] as? [JSON]
+    }
 }

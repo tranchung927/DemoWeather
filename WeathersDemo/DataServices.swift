@@ -18,26 +18,29 @@ class DataServices {
         }
     }
     
-    var weather : Weather?
+    var _weatherOfDays : [Weather]?
+    
     
     private func  weatherAtLocation(locationString: String) {
-        let baseUrl = "http://api.apixu.com/v1/forecast.json?"
+        let baseUrl = "http://api.apixu.com/v1/forecast.json?&days=7"
         var urlString = baseUrl
         var parameter : Dictionary<String, String> = [:]
         parameter["q"] = searchKey
         parameter["key"] = "f3d902b438a3451c92605731171906"
         
         for (key,value) in parameter {
-            urlString += "&" + key + "=" + value + "&days=10"
+            urlString += "&" + key + "=" + value
+            print(urlString)
         }
         
-        guard let url = URL(string: urlString)   else {
+        guard let url = URL(string: urlString) else {
             return
         }
         
         let urlRequest = URLRequest(url: url)
-        makeDataTaskRequest(request: urlRequest) { self.weather = Weather(json: $0)
-        NotificationCenter.default.post(name: NotificationKey.data, object: nil)
+        makeDataTaskRequest(request: urlRequest){
+            self.weather = Weather(json: $0)
+            NotificationCenter.default.post(name: NotificationKey.data, object: nil)
         }
     }
 
