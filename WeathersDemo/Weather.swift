@@ -15,6 +15,7 @@ struct Weather {
         var condition: String
         var imgURL: String
         var city: String
+        var timeCurrent: TimeInterval
         var weatherObjectarray: [WeatherOBject] = []
         var weatherDateObjectArray: [WeatherDateObject] = []
     
@@ -25,7 +26,8 @@ struct Weather {
                 return nil
         }
         guard let current = json["current"] as? JSON,
-            let temp = current["temp_c"] as? Double
+            let temp = current["temp_c"] as? Double,
+            let last_updated_epoch = current["last_updated_epoch"] as? TimeInterval
             else {
                 return nil
         }
@@ -73,6 +75,7 @@ struct Weather {
         self.condition = text
         self.degree = temp
         self.imgURL = "http:\(icon)"
+        self.timeCurrent = last_updated_epoch
     }
 }
 

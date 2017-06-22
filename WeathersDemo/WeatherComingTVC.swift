@@ -9,14 +9,36 @@
 import UIKit
 
 class WeatherComingTVC: UITableViewController {
+    @IBOutlet weak var maxDegree: UILabel!
+    @IBOutlet weak var minDegree: UILabel!
+    @IBOutlet weak var dayOfWeek: UILabel!
     @IBOutlet weak var colectionView: UICollectionView!
-    
+    var weatherDay: Weather? {
+        willSet {
+            self.weatherDay = DataServices.shared.weather
+        }
+        didSet{
+            let dayCurrent = weatherDay?.timeCurrent ?? 0
+            let create =  Date(timeIntervalSince1970: dayCurrent)
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "VI")
+            
+            let day = dateFormatter.weekdaySymbols[Calendar.current.component(.weekday, from: create) - 1]
+            dayOfWeek.text = day
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(updateData), name: NotificationKey.data, object: nil)
     }
     func updateData() {
         colectionView.reloadData()
+        self.weatherDay = DataServices.shared.weather
+        let weatherMinMax = weatherDay?.weatherDateObjectArray ?? []
+        for item in weatherMinMax {
+            maxDegree.text = "\(item.maxtemp)"
+            minDegree.text = "\(item.mintemp)"
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

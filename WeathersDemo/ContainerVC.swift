@@ -9,12 +9,10 @@
 import UIKit
 
 class ContainerVC: UIViewController {
-
+    @IBOutlet weak var degreeLB: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLb: UILabel!
     @IBOutlet weak var conditonLb: UILabel!
-    @IBOutlet weak var degreLb: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
     
     var time: Date?
     
@@ -27,12 +25,12 @@ class ContainerVC: UIViewController {
             guard let degree = self.weather?.degree else {
                 return
             }
-            degreLb.text = "\(degree)ºC"
+            degreeLB.text = "\(degree)ºC"
             conditonLb.text = weather?.condition
-            guard let urlImage = weather?.imgURL else {
-                return
-            }
-            imageView.downloadImage(from: urlImage)
+//            guard let urlImage = weather?.imgURL else {
+//                return
+//            }
+//            imageView.downloadImage(from: urlImage)
         }
     }
     
